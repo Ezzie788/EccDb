@@ -1,0 +1,267 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SW Woocommerce\n"
+"POT-Creation-Date: 2019-01-17 16:36+0700\n"
+"PO-Revision-Date: 2015-12-25 14:46+0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.8\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;esc_html__;esc_html_e;esc_attr__;"
+"esc_attr_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/element/sw-brand-element.php:8
+msgid "All Categories"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:15
+#: includes/widgets/sw-brand-widget.php:16
+msgid "Sw Brand"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:19
+msgid "SW Shortcodes"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:25
+#: includes/element/sw-brand-element.php:29
+#: includes/widgets/sw-brand-filter-widget.php:140
+#: includes/widgets/sw-brand-widget.php:258
+msgid "Title"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:35
+msgid "Category"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:39
+msgid "Select Categories"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:46
+#: includes/widgets/sw-brand-widget.php:277
+msgid "Style"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:50
+msgid "Select Style"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:57
+#: includes/element/sw-brand-element.php:61
+msgid "Order By"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:68
+#: includes/element/sw-brand-element.php:72
+#: includes/widgets/sw-brand-widget.php:315
+msgid "Order"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:79
+#: includes/element/sw-brand-element.php:83
+msgid "Number Of Post"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:89
+#: includes/element/sw-brand-element.php:93
+msgid "Number row per column"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:99
+#: includes/widgets/sw-brand-widget.php:366
+msgid "Number of Columns >1200px: "
+msgstr ""
+
+#: includes/element/sw-brand-element.php:103
+msgid "Number of Columns >1200px:"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:109
+#: includes/element/sw-brand-element.php:113
+msgid "Number of Columns on 992px to 1199px:"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:119
+#: includes/element/sw-brand-element.php:123
+msgid "Number of Columns on 768px to 991px:"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:129
+#: includes/element/sw-brand-element.php:133
+msgid "Number of Columns on 480px to 767px:"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:139
+#: includes/element/sw-brand-element.php:143
+msgid "Number of Columns in 480px or less than:"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:149
+#: includes/widgets/sw-brand-widget.php:488
+msgid "Speed"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:153
+msgid "Speed Of Slide"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:159
+#: includes/element/sw-brand-element.php:163
+#: includes/widgets/sw-brand-widget.php:466
+msgid "Auto Play"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:169
+#: includes/element/sw-brand-element.php:173
+#: includes/widgets/sw-brand-widget.php:481
+msgid "Interval"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:179
+#: includes/element/sw-brand-element.php:183
+msgid "Layout"
+msgstr ""
+
+#: includes/element/sw-brand-element.php:189
+#: includes/element/sw-brand-element.php:193
+#: includes/widgets/sw-brand-widget.php:496
+msgid "Total Items Slided"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:33
+msgid "Categories Brand"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:34
+msgid "Category Brand"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:53
+#: includes/taxonomy/sw-brand-taxonomy.php:126
+#: includes/taxonomy/sw-brand-taxonomy.php:235
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:57
+#: includes/taxonomy/sw-brand-taxonomy.php:131
+msgid "Upload/Add image"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:58
+#: includes/taxonomy/sw-brand-taxonomy.php:132
+msgid "Remove image"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:82
+#: includes/taxonomy/sw-brand-taxonomy.php:156
+msgid "Choose an image"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:84
+#: includes/taxonomy/sw-brand-taxonomy.php:158
+msgid "Use image"
+msgstr ""
+
+#: includes/taxonomy/sw-brand-taxonomy.php:204
+msgid "Image"
+msgstr ""
+
+#: includes/widgets/sw-brand-filter-widget.php:14
+msgid "Sw Brand Filter"
+msgstr ""
+
+#: includes/widgets/sw-brand-filter-widget.php:16
+msgid "Sw brand filter widget"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:22
+msgid "Sw brand widget"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:265
+msgid "Product Title Length"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:272
+msgid "Category ID"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:284
+#: includes/widgets/sw-brand-widget.php:510
+msgid "Default"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:288
+msgid "Style 1"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:294
+msgid "Orderby"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:321
+msgid "Descending"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:324
+msgid "Ascending"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:330
+msgid "Number of Posts"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:337
+msgid "Excerpt length (in words): "
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:345
+msgid "Number row per column:  "
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:386
+msgid "Number of Columns on 992px to 1199px: "
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:406
+msgid "Number of Columns on 768px to 991px: "
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:426
+msgid "Number of Columns on 480px to 767px: "
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:446
+msgid "Number of Columns in 480px or less than: "
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:472
+msgid "False"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:475
+msgid "True"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:503
+msgid "Template"
+msgstr ""
+
+#: includes/widgets/sw-brand-widget.php:514
+msgid "Layout 1"
+msgstr ""
+
+#: sw-product-brand.php:78
+msgid ""
+"Sw Woocommerce is enabled but not effective. It requires WooCommerce in order "
+"to work."
+msgstr ""
