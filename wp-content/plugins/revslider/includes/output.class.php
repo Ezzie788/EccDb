@@ -214,11 +214,6 @@ class RevSliderOutput extends RevSliderFunctions {
 	private $modal_sliders = array();
 	
 	/**
-	 * holds easings that the slider is using
-	 **/
-	private $easings = array();
-	
-	/**
 	 * START: DEPRECATED FUNCTIONS THAT ARE IN HERE FOR OLD ADDONS TO WORK PROPERLY
 	 **/
 	
@@ -365,11 +360,8 @@ class RevSliderOutput extends RevSliderFunctions {
 	 * get the HTML ID
 	 * @before: RevSliderOutput::getSliderHtmlID
 	 */
-	public function get_html_id($raw = true){
-		$html_id = $this->html_id;
-		$html_id = (!$raw) ? preg_replace("/[^a-zA-Z0-9]/", "", $html_id) : $html_id;
-		
-		return apply_filters('revslider_get_html_id', $html_id, $this, $raw);
+	public function get_html_id(){
+		return apply_filters('revslider_get_html_id', $this->html_id, $this);
 	}
 	
 	/**
@@ -1360,7 +1352,6 @@ class RevSliderOutput extends RevSliderFunctions {
 		if($slide->get_param(array('panzoom', 'set'), false) == true && ($bg_type == 'image' || $bg_type == 'external')){
 			$d = $slide->get_param(array('panzoom', 'duration'), '10000');
 			$e = $slide->get_param(array('panzoom', 'ease'), 'none');
-			$this->easings[$e] = $e;
 			$ss = $slide->get_param(array('panzoom', 'fitStart'), '100');
 			$se = $slide->get_param(array('panzoom', 'fitEnd'), '100');
 			$rs = $slide->get_param(array('panzoom', 'rotateStart'), '0');
@@ -1369,7 +1360,6 @@ class RevSliderOutput extends RevSliderFunctions {
 			$be = $slide->get_param(array('panzoom', 'blurEnd'), '0');
 			$os = $slide->get_param(array('panzoom', 'xStart'), '0').'/'.$slide->get_param(array('panzoom', 'yStart'), '0');
 			$oe = $slide->get_param(array('panzoom', 'xEnd'), '0').'/'.$slide->get_param(array('panzoom', 'yEnd'), '0');
-			
 			
 			$pan .= ($d !== '') ? 'd:'.$d.';' : '';
 			$pan .= ($e !== 'none') ? 'e:'.$e.';' : '';
@@ -3046,18 +3036,16 @@ rs-module .material-icons {
 						$menu_link = do_shortcode($menu_link);
 						$http		= $this->get_val($action, 'link_help_in', 'keep');
 						$events[] = array(
-							'o'		 => $this->get_val($action, 'tooltip_event', ''),
-							'a'		 => 'menulink',
-							'target' => $this->remove_http($this->get_val($action, 'link_open_in', ''), $http),
-							'url' 	 => $menu_link,
-							'anchor' => $this->get_val($action, 'menu_anchor', ''),																								
-							'offset' => $this->get_val($action, 'scrollunder_offset', ''),								
-							'sp'	 => $this->get_val($action, 'action_speed', '300'),
-							'e'	 	 => $this->get_val($action, 'action_easing', 'none'),
-							'd'		 => $this->get_val($action, 'action_delay', '')
-						);
-						$easing = $this->get_val($action, 'action_easing', 'none');
-						$this->easings[$easing] = $easing;
+								'o'		 => $this->get_val($action, 'tooltip_event', ''),
+								'a'		 => 'menulink',
+								'target' => $this->remove_http($this->get_val($action, 'link_open_in', ''), $http),
+								'url' 	 => $menu_link,
+								'anchor' => $this->get_val($action, 'menu_anchor', ''),																								
+								'offset' => $this->get_val($action, 'scrollunder_offset', ''),								
+								'sp'	 => $this->get_val($action, 'action_speed', '300'),
+								'e'	 	 => $this->get_val($action, 'action_easing', 'none'),
+								'd'		 => $this->get_val($action, 'action_delay', '')
+							);
 					break;
 					case 'link':
 						//if post based, replace {{}} with correct info
@@ -3199,8 +3187,6 @@ rs-module .material-icons {
 							'sp'	 => $this->get_val($action, 'action_speed', '300'),
 							'e'	 	 => $this->get_val($action, 'action_easing', 'none')
 						);
-						$easing = $this->get_val($action, 'action_easing', 'none');
-						$this->easings[$easing] = $easing;
 					break;
 					case 'scrollto': //ok
 						$events[] = array(
@@ -3212,8 +3198,6 @@ rs-module .material-icons {
 							'sp'	 => $this->get_val($action, 'action_speed', '300'),
 							'e'	 	 => $this->get_val($action, 'action_easing', 'none')
 						);
-						$easing = $this->get_val($action, 'action_easing', 'none');
-						$this->easings[$easing] = $easing;
 					break;
 					case 'start_in':
 						$events[] = array(
@@ -3779,11 +3763,7 @@ rs-module .material-icons {
 						$a = $v['d'];
 					}
 					$nv = $this->get_val($frame, $_key, $a);
-					
-					if($_key === 'ease' || (is_array($_key) && in_array('ease', $_key, true))){
-						$this->easings[$nv] = $nv;
-					}
-					
+
 					if(is_object($nv) || is_array($nv)){
 						if($this->adv_resp_sizes == true){
 							$b = (!is_array($a)) ? array($a) : $a;
@@ -3925,10 +3905,6 @@ rs-module .material-icons {
 								}
 								$nv = $this->get_val($frame, $_key, $a);
 								
-								if($_key === 'ease' || (is_array($_key) && in_array('ease', $_key, true))){
-									$this->easings[$nv] = $nv;
-								}
-								
 								if(is_object($nv) || is_array($nv)){
 									if($this->adv_resp_sizes == true){
 										$b = (!is_array($a)) ? array($a) : $a;
@@ -3968,6 +3944,7 @@ rs-module .material-icons {
 			
 			$idle_v = $this->get_val($layer, 'idle', array());
 			$hover_v = $this->get_val($layer, 'hover', array());
+
 			
 			$hv = array(
 				'opacity'		=> array('n' => 'o', 'd' => 1),
@@ -4002,15 +3979,18 @@ rs-module .material-icons {
 				'usehovermask'	=> array('n' => 'm', 'd' => false)		
 			);
 
-			if ($this->get_val($layer, array('hover', 'usehover'), false) === 'desktop') $hv['instantClick'] = array('n' => 'iC', 'd' => 'true');
+			if ($this->get_val($layer, array('hover', 'usehover'), false) === 'desktop') $hv['instantClick'] =  array('n' => 'iC', 'd' => 'true');
+				
 			
 			$devices = array('d', 'n', 't', 'm');
-			
+						
 			foreach($hv as $key => $v){
 				$_key = (isset($v['depth'])) ? $v['depth'] : $key;
-				$nv = $this->get_val($hover_v, $_key, $v['d']);
 				
-				if($_key === 'ease') $this->easings[$nv] = $nv;
+
+				$nv = $this->get_val($hover_v, $_key, $v['d']);
+
+				
 				
 				if(is_object($nv) || is_array($nv)){
 					
@@ -4087,8 +4067,8 @@ rs-module .material-icons {
 				}
 
 				// If iC (instanc Click) is available, we must write it ! 
-				if ($v['n'] === 'iC') $idle = 'false';
-				
+				if ($v['n']==='iC') $idle="false";
+					
 				if(is_array($hover)) $hover = implode(',', $hover);
 				if(is_array($idle)) $idle = implode(',', $idle);
 				if(is_array($nv)) $nv = implode(',', $nv);
@@ -4102,6 +4082,8 @@ rs-module .material-icons {
 					$_frames['frame_hover']['base'][$v['n']] = $this->transform_frame_vals($nv);
 				}
 			}
+
+			
 		}
 		
 		/**
@@ -4844,7 +4826,6 @@ rs-module .material-icons {
 		if($this->get_val($layer, array('timeline', 'loop', 'use'), false) === true){
 			
 			$e	 = $this->get_val($layer, array('timeline', 'loop', 'ease'), 'none');
-			$this->easings[$e] = $e;
 			$sp	 = $this->get_val($layer, array('timeline', 'loop', 'speed'), 1000);
 			$rA	 = $this->get_val($layer, array('timeline', 'loop', 'radiusAngle'), 0);
 			$crns = $this->get_val($layer, array('timeline', 'loop', 'curviness'), 2);
@@ -5720,14 +5701,6 @@ rs-module .material-icons {
 	public function get_html_ease_in(){
 		$slide	= $this->get_slide();
 		$easein	= $slide->get_param(array('timeline', 'easeIn'), array('default'));
-		if((is_array($easein) || is_object($easein)) && !empty($easein)){
-			foreach($easein as $ei){
-				$this->easings[$ei] = $ei;
-			}
-		}else{
-			$this->easings[$easein] = $easein;
-		}
-		
 		$easein = (!empty($easein) && (is_array($easein) || is_object($easein))) ? 'ei:'.implode(',', (array)$easein).';' : '';
 
 		return str_replace('default', 'd', $easein);
@@ -5739,14 +5712,6 @@ rs-module .material-icons {
 	public function get_html_ease_out(){
 		$slide	 = $this->get_slide();
 		$easeout = $slide->get_param(array('timeline', 'easeOut'), array('default'));
-		if((is_array($easeout) || is_object($easeout)) && !empty($easeout)){
-			foreach($easeout as $eo){
-				$this->easings[$eo] = $eo;
-			}
-		}else{
-			$this->easings[$easeout] = $easeout;
-		}
-		
 		$easeout = (!empty($easeout) && (is_array($easeout) || is_object($easeout))) ? 'eo:'.implode(',', (array)$easeout).';' : '';
 		
 		return str_replace('default', 'd', $easeout);
@@ -6588,7 +6553,6 @@ rs-module .material-icons {
 		$html_scroll	 = $this->js_get_scrolleffect();
 		$html_sb_timeline = $this->js_get_scrollbased_timeline();
 		$html_view_port	 = $this->js_get_viewport();
-		$html_custom_eases = $this->js_get_custom_eases();
 		
 		$html_fallback	 = $this->js_get_fallback();		
 		$html_custom_css = $this->js_get_custom_css();
@@ -6623,7 +6587,6 @@ rs-module .material-icons {
 		echo $html_scroll;
 		echo $html_sb_timeline;
 		echo $html_view_port;
-		echo $html_custom_eases;
 		
 		echo $html_fallback;		
 		echo $html_base_post;
@@ -6662,7 +6625,6 @@ rs-module .material-icons {
 		$layout = $this->slider->get_param('layouttype');
 		$sid	= $this->slider->get_id();
 		$html_id = $this->get_html_id();
-		$html_id_trimmed = $this->get_html_id(false);
 		$fw = ($layout == 'fullwidth') ? 'on' : 'off';
 		$fw = ($layout == 'fullscreen') ? 'off' : $fw;
 		$fs = ($layout == 'fullscreen') ? 'on' : 'off';		
@@ -6671,7 +6633,6 @@ rs-module .material-icons {
 		$html .= RS_T5.$this->get_html_js_start_size($fw, $fs)."\n";
 		$html .= RS_T5.'var	revapi'. $sid .','."\n";
 		$html .= RS_T6.'tpj;'."\n";
-		$html .= RS_T5.'function revinit_'.$html_id_trimmed .'() {'."\n"; 
 		$html .= RS_T5.'jQuery(function() {'."\n";
 		$html .= RS_T6.'tpj = jQuery;'."\n";
 		$html .= RS_T6.'revapi'. $sid.' = tpj("#'. $html_id .'");'."\n";
@@ -6690,10 +6651,8 @@ rs-module .material-icons {
 	 * get the JavaScript Post
 	 **/
 	public function js_get_base_post(){
-		$sid = $this->slider->get_id();
-		$html_id = $this->get_html_id();
-		$html_id_trimmed = $this->get_html_id(false);
 		$html = '';
+		
 		ob_start();
 		do_action('revslider_fe_javascript_option_output', $this->slider);
 		$js_action = ob_get_contents();
@@ -6718,9 +6677,6 @@ rs-module .material-icons {
 		$html .= $js_action;
 		$html .= "\n";
 		$html .= RS_T5.'});'."\n";
-		$html .= RS_T5.'} // End of RevInitScript'."\n";		
-		$html .= RS_T4.'var once_' . $html_id_trimmed . ' = false;'."\n";
-		$html .= RS_T4.'if (document.readyState === "loading") {document.addEventListener(\'readystatechange\',function() { if((document.readyState === "interactive" || document.readyState === "complete") && !once_' . $html_id_trimmed . ' ) { once_' . $html_id_trimmed . ' = true; revinit_'.$html_id_trimmed .'();}});} else {once_' . $html_id_trimmed . ' = true; revinit_'.$html_id_trimmed .'();}'."\n";
 		$html .= RS_T4.'</script>'."\n";
 		
 		return $html;
@@ -7043,38 +6999,6 @@ rs-module .material-icons {
 		
 		return $html;
 	}
-	
-	/**
-	 * get the custom easings
-	 **/
-	public function js_get_custom_eases(){
-		$html	 = '';
-		$s		 = $this->slider; //shorten
-		$easings = array();
-		$custom_easings = array('SFXBounceLite', 'SFXBounceSolid', 'SFXBounceStrong', 'SFXBounceExtrem', 'BounceLite', 'BounceSolid', 'BounceStrong', 'BounceExtrem');
-		
-		if(!empty($this->easings)){
-			foreach($custom_easings as $ce){
-				if(isset($this->easings[$ce])){
-					$easings[] = $ce;
-				}
-			}
-		}
-		
-		if(!empty($easings)){
-			$ff = true;
-			$html .= RS_T8.'customEases: {'."\n";
-			foreach($easings as $v){
-				$html .= ($ff === true) ? '' : ','."\n";
-				$html .= RS_T9.$v.':';
-				$html .= 'true';
-				$ff = false;
-			}
-			$html .= "\n".RS_T8.'},'."\n";
-		}
-		
-		return $html;
-	}
 
 	/**
 	 * get the scrolleffect attibutes
@@ -7141,7 +7065,6 @@ rs-module .material-icons {
 		
 		$ol	 = $s->get_param(array('scrolltimeline', 'layers'), false);
 		$ea	 = $s->get_param(array('scrolltimeline', 'ease'), 'none');
-		$this->easings[$ea] = $ea;
 		$sp	 = $s->get_param(array('scrolltimeline', 'speed'), 500);
 		
 		$sfix	= $s->get_param(array('scrolltimeline', 'fixed'), false);
@@ -7283,7 +7206,6 @@ rs-module .material-icons {
 		$c = array();
 		
 		$ease = $s->get_param(array('carousel', 'ease'), 'power3.inOut');
-		$this->easings[$ease] = $ease;
 		$speed = $s->get_param(array('carousel', 'speed'), 800);
 		$sal = $s->get_param(array('carousel', 'showAllLayers'), false);
 		$ha = $s->get_param(array('carousel', 'horizontal'), 'center');

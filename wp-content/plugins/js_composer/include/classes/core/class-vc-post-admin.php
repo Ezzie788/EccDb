@@ -24,16 +24,15 @@ class Vc_Post_Admin {
 			$this,
 			'saveAjaxFe',
 		) );
-		add_filter( 'content_save_pre', 'wpb_remove_custom_html' );
 	}
 
 	/**
 	 * @throws \Exception
 	 */
 	public function saveAjaxFe() {
-		$post_id = intval( vc_post_param( 'post_id' ) );
-		vc_user_access()->checkAdminNonce()->validateDie()->wpAny( 'edit_posts', 'edit_pages' )->validateDie()->canEdit( $post_id )->validateDie();
+		vc_user_access()->checkAdminNonce()->validateDie()->wpAny( 'edit_posts', 'edit_pages' )->validateDie();
 
+		$post_id = intval( vc_post_param( 'post_id' ) );
 		if ( $post_id > 0 ) {
 			ob_start();
 
@@ -49,9 +48,7 @@ class Vc_Post_Admin {
 				if ( null !== $post_title ) {
 					$post->post_title = $post_title;
 				}
-				if ( vc_user_access()->part( 'unfiltered_html' )->checkStateAny( true, null )->get() ) {
-					kses_remove_filters();
-				}
+				kses_remove_filters();
 				remove_filter( 'content_save_pre', 'balanceTags', 50 );
 				if ( $post_status && 'publish' === $post_status ) {
 					if ( vc_user_access()->wpAll( array(
@@ -94,6 +91,7 @@ class Vc_Post_Admin {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE || vc_is_inline() ) {
 			return;
 		}
+
 		$this->setPostMeta( $post_id );
 	}
 
