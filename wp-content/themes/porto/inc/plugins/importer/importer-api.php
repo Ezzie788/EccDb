@@ -144,8 +144,33 @@ class Porto_Importer_API {
 			return $path_unzip;
 		}
 
-		$source_path = wp_normalize_path( dirname( __FILE__ ) . '/data/' . $this->demo . '.zip' );
-		$body = @file_get_contents( $source_path );
+		$url          = $this->url[ $target ];
+		$args         = $this->generate_args();
+		$args['demo'] = $this->demo;
+
+		$url = add_query_arg( $args, $url );
+
+		$args = array(
+			'user-agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . network_site_url(),
+			'timeout'    => 60,
+		);
+
+		$response = wp_remote_get( $url, $args );
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		$body = wp_remote_retrieve_body( $response );
+
+		if ( empty( $body ) ) {
+			return new WP_Error( 'error_download', __( 'The package could not be downloaded.', 'porto' ) );
+		}
+
+		if ( $json = json_decode( $body, true ) ) {
+			if ( isset( $json['error'] ) ) {
+				return new WP_Error( 'invalid_response', $json['error'] );
+			}
+		}
 
 		// filesystem
 		global $wp_filesystem;

@@ -1,0 +1,62 @@
+version: '3'
+services:
+
+  wordpress:
+    depends_on:
+      - maltaemporium_db
+    image: wordpress:5.1.1-fpm-alpine
+    container_name: wordpress
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - WORDPRESS_DB_HOST=maltaemporium_db:3306
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=EoKwek
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    depends_on:
+      - wordpress
+    image: nginx:1.15.12-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #MySQL Service
+  maltaemporium_db:
+    image: mysql:5.7.22
+    container_name: maltaemporium_db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MYSQL_DATABASE=EoKwek
+    tty: true
+    ports:
+      - "3301:3306"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local

@@ -1649,10 +1649,6 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 		public function get_download_url( $slug ) {
 			$dl_source = '';
 
-			if($slug == 'revslider' || $slug == 'js_composer')
-			{
-			return PORTO_PLUGINS_URI . '/' . $slug .'.zip';
-			}
 			switch ( $this->plugins[ $slug ]['source_type'] ) {
 				case 'repo':
 					return $this->get_wp_repo_download_url( $slug );

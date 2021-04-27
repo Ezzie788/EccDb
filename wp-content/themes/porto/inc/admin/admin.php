@@ -3,8 +3,6 @@
 /**
  * Porto Admin Class
  */
-update_option( 'envato_purchase_code_9207399' ,'0d9266ab-4233-42ee-b48b-5fc5bfb8ee5f');
-update_option( 'porto_registered' ,true);
 defined( 'ABSPATH' ) || exit;
 
 class Porto_Admin {
@@ -127,8 +125,51 @@ class Porto_Admin {
 
 	public function check_purchase_code() {
 
-		
-		return 'verified';
+		if ( ! $this->_checkedPurchaseCode ) {
+			$code         = isset( $_POST['code'] ) ? sanitize_text_field( $_POST['code'] ) : '';
+			$code_confirm = $this->get_purchase_code();
+
+			if ( isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ) {
+				preg_match( '/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/', parse_url( site_url(), PHP_URL_HOST ), $_domain_tld );
+				if ( isset( $_domain_tld[0] ) ) {
+					$domain = $_domain_tld[0];
+				} else {
+					$domain = parse_url( site_url(), PHP_URL_HOST );
+				}
+				if ( ! $code || $code != $code_confirm ) {
+					if ( $code_confirm ) {
+						$result = $this->curl_purchase_code( $code_confirm, '', 'remove' );
+					}
+					if ( 'unregister' === $_POST['action'] && $result && isset( $result['result'] ) && 3 === (int) $result['result'] ) {
+						$this->_checkedPurchaseCode = 'unregister';
+						$this->set_purchase_code( '' );
+						return $this->_checkedPurchaseCode;
+					}
+				}
+				if ( $code ) {
+					$result = $this->curl_purchase_code( $code, $domain, 'add' );
+					if ( ! $result ) {
+						$this->_checkedPurchaseCode = 'invalid';
+						$code_confirm               = '';
+					} elseif ( isset( $result['result'] ) && 1 === (int) $result['result'] ) {
+						$code_confirm               = $code;
+						$this->_checkedPurchaseCode = 'verified';
+					} else {
+						$this->_checkedPurchaseCode = $result['message'];
+						$code_confirm               = '';
+					}
+				} else {
+					$code_confirm               = '';
+					$this->_checkedPurchaseCode = '';
+				}
+				$this->set_purchase_code( $code_confirm );
+			} else {
+				if ( $code && $code_confirm && $code == $code_confirm ) {
+					$this->_checkedPurchaseCode = 'verified';
+				}
+			}
+		}
+		return $this->_checkedPurchaseCode;
 	}
 
 	public function curl_purchase_code( $code, $domain, $act ) {
@@ -137,7 +178,9 @@ class Porto_Admin {
 
 		$result = $importer_api->get_response( $this->activation_url . "?item=9207399&code=$code&domain=$domain&siteurl=" . urlencode( site_url() ) . "&act=$act" . ( $importer_api->is_localhost() ? '&local=true' : '' ) );
 
-		
+		if ( ! $result || is_wp_error( $result ) ) {
+			return false;
+		}
 		return $result;
 	}
 

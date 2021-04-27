@@ -14,3 +14,13 @@ Text Domain: porto
 /*************** ADD YOUR CUSTOM CSS HERE  ***************/
 
 .bypostauthor { display: block; }
+
+
+
+.footer-links a + a {
+  margin-left:1rem;
+}
+
+.footer-links a:hover{
+	color:#000000 !important;
+}

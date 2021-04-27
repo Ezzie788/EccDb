@@ -267,7 +267,7 @@ if ( current_user_can( 'manage_options' ) ) {
 
 			foreach ( $plugins as $key => $plugin ) {
 				$args['plugin']               = $plugin['slug'];
-				$plugins[ $key ]['source']    = PORTO_PLUGINS_URI . '/' . $plugin[ 'slug' ] . '.zip';
+				$plugins[ $key ]['source']    = add_query_arg( $args, $importer_api->get_url( 'plugins' ) );
 				$plugins[ $key ]['image_url'] = PORTO_PLUGINS_URI . '/images/' . $args['plugin'] . '.png';
 			}
 			// set transient
